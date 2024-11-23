@@ -15,8 +15,6 @@ public class ApplicationDbContext : IdentityDbContext<User,Role, Guid>
     {
          _configuration = configuration;
         Database.EnsureCreated();
-        
-       
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
