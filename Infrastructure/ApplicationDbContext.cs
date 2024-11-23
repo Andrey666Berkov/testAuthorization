@@ -19,6 +19,13 @@ public class ApplicationDbContext : IdentityDbContext<User,Role, Guid>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("Database"));
+        optionsBuilder
+            .UseNpgsql(_configuration.GetConnectionString("Database"))
+            .UseCamelCaseNamingConvention();
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
     }
 }
