@@ -9,11 +9,11 @@ public class Account : Controller
     [HttpGet]
     
     public IActionResult Register(
-        [FromBody] LoginRequest request,
+        [FromBody] RegistrationRequest request,
         [FromServices] RegistrationUseCase registrationUseCase)
     {
         
-         registrationUseCase.Handle(new LoginCommand(request.Email, request.Password));
+         registrationUseCase.Handle(new RegistrationCommand(request.Email, request.Password));
         return Ok();
     }
 }
