@@ -73,6 +73,30 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "roleUser",
+                columns: table => new
+                {
+                    rolesId = table.Column<Guid>(type: "uuid", nullable: false),
+                    usersId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pK_roleUser", x => new { x.rolesId, x.usersId });
+                    table.ForeignKey(
+                        name: "fK_roleUser_roles_rolesId",
+                        column: x => x.rolesId,
+                        principalTable: "roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fK_roleUser_users_usersId",
+                        column: x => x.usersId,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user_claims",
                 columns: table => new
                 {
@@ -169,6 +193,11 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "iX_roleUser_usersId",
+                table: "roleUser",
+                column: "usersId");
+
+            migrationBuilder.CreateIndex(
                 name: "iX_user_claims_userId",
                 table: "user_claims",
                 column: "userId");
@@ -200,6 +229,9 @@ namespace Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "role_claims");
+
+            migrationBuilder.DropTable(
+                name: "roleUser");
 
             migrationBuilder.DropTable(
                 name: "user_claims");

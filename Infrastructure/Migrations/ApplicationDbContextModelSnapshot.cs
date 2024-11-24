@@ -265,6 +265,25 @@ namespace Infrastructure.Migrations
                     b.ToTable("user_tokens", (string)null);
                 });
 
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("rolesId");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("usersId");
+
+                    b.HasKey("RolesId", "UsersId")
+                        .HasName("pK_roleUser");
+
+                    b.HasIndex("UsersId")
+                        .HasDatabaseName("iX_roleUser_usersId");
+
+                    b.ToTable("roleUser", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Infrastructure.Models.Role", null)
@@ -320,6 +339,23 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fK_user_tokens_users_userId");
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("Infrastructure.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fK_roleUser_roles_rolesId");
+
+                    b.HasOne("Infrastructure.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fK_roleUser_users_usersId");
                 });
 #pragma warning restore 612, 618
         }

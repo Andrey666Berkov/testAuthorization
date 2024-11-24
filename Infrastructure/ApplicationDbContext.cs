@@ -31,15 +31,17 @@ public class ApplicationDbContext : IdentityDbContext<User,Role, Guid>
         
         builder.Entity<User>().ToTable("users");
 
-        /*builder.Entity<User>()
+        builder.Entity<User>()
             .HasMany<Role>()
-            .WithMany(x => x.Users);*/
+            .WithMany()
+            .UsingEntity<IdentityUserRole<Guid>>();
         
         builder.Entity<Role>().ToTable("roles");
         
-        /*builder.Entity<Role>()
+       /*builder.Entity<Role>()
             .HasMany<User>()
-            .WithMany(x => x.Roles);*/
+            .WithMany()
+            .UsingEntity<IdentityUserRole<Guid>>();*/
         
         builder.Entity<IdentityRoleClaim<Guid>>().ToTable("role_claims");
         
