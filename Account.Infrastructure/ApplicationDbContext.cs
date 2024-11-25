@@ -1,13 +1,18 @@
-﻿using Infrastructure.Models;
+﻿using Account.Application.UseCase.LoginUseCase;
+using Account.Domain;
+using Account.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure;
+namespace Account.Infrastructure;
 
 public class ApplicationDbContext : IdentityDbContext<User,Role, Guid>
 {
+    public DbSet<RefreshSession> RefreshTokens => Set<RefreshSession>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Role> Roles => Set<Role>();
     private readonly IConfiguration _configuration;
 
     public ApplicationDbContext(
@@ -52,6 +57,8 @@ public class ApplicationDbContext : IdentityDbContext<User,Role, Guid>
         builder.Entity<IdentityUserLogin<Guid>>().ToTable("user_logins");
         
         builder.Entity<IdentityUserToken<Guid>>().ToTable("user_tokens");
+        
+        
     }
     
     // "Database": "Server=server;Port=port;Database=database;User Id=userid;Password=password;",

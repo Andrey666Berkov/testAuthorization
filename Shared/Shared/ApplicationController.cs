@@ -7,6 +7,7 @@ namespace Shared;
 [Route("[controller]")]
 public class ApplicationController :ControllerBase
 {
+    
     public override OkObjectResult Ok(object obj)
     {
         var envelope=Envelope.Ok(obj);

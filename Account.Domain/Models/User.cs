@@ -1,25 +1,27 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-
-namespace Infrastructure.Models;
+namespace Account.Domain.Models;
 
 public class User : IdentityUser<Guid>
 {
+    
     private List<Role> _roles=[];
     public IReadOnlyList<Role> Roles => _roles;
 
     private User()
     { }
-    private User(string email, Role role)
+    private User(string name, string email, Role role)
     {
+        base.UserName = name;
         Email = email;
         _roles.Add(role);
     }
 
-    public static User Create(string email, Role role)
+    public static User Create(string name,string email, Role role)
     {
-        return new User(email, role);
+        return new User(name,email, role);
     }
+    
 }
 
 public class Role : IdentityRole<Guid>

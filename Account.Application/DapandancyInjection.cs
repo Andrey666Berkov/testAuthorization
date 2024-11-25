@@ -1,8 +1,12 @@
-using Application.UseCase;
+using Account.Application.UseCase;
+using Account.Application.UseCase.LoginUseCase;
+using Account.Application.UseCase.RefreshTokenUseCase;
+using Account.Application.UseCase.RegistrationUseCase;
+using Account.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace Account.Application;
 
 public static class DapandancyInjection
 {
@@ -11,6 +15,8 @@ public static class DapandancyInjection
         IConfiguration configuration)
     {
         services.AddScoped<RegistrationUseCase>();
+        services.AddScoped<LoginUseCase>();
+        services.AddScoped<RefreshTokenUseCase>();
         
         return services;
     }

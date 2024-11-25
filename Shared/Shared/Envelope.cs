@@ -1,4 +1,8 @@
-namespace Shared.Error;
+using System.Runtime.InteropServices.JavaScript;
+using CSharpFunctionalExtensions;
+using Shared.Error;
+
+namespace Shared;
 
 public class Envelope
 {
