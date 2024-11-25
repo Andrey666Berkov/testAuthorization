@@ -1,4 +1,6 @@
 using Application.UseCase;
+using Application.UseCase.LoginUseCase;
+using Application.UseCase.RegistrationUseCase;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +13,8 @@ public static class DapandancyInjection
         IConfiguration configuration)
     {
         services.AddScoped<RegistrationUseCase>();
+        services.AddScoped<LoginUseCase>();
+        services.AddScoped<JwtToken>();
         
         return services;
     }

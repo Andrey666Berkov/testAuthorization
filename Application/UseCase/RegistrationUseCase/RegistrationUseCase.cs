@@ -1,9 +1,9 @@
 using CSharpFunctionalExtensions;
-using Infrastructure.Models;
+using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Shared.Error;
 
-namespace Application.UseCase;
+namespace Application.UseCase.RegistrationUseCase;
 
 public class RegistrationUseCase
 {
@@ -17,10 +17,10 @@ public class RegistrationUseCase
         _userManger = userManger;
         _roleManger = roleManger;
     }
-    public async Task<Result<User ,ErrorMy>> Handle(RegistrationCommand registrationCommand)
+    public async Task<Result<Guid ,ErrorMy>> Handle(RegistrationCommand registrationCommand)
     {
-        var userResult = _userManger.FindByEmailAsync(registrationCommand.Email);
-        if (userResult.IsCompleted)
+        var userEmail =await _userManger.FindByEmailAsync(registrationCommand.Email);
+        if (userEmail != null)
             return ErrorsMy.General.Conflict("Email");
         
         var role = await _roleManger.FindByNameAsync("userRole");
@@ -31,9 +31,12 @@ public class RegistrationUseCase
             role = Role.Create("userRole");
         }
         
-        var user = User.Create(registrationCommand.Email, role);
+        var user = User.Create(registrationCommand.Name ,registrationCommand.Email, role);
         
-      await _userManger.CreateAsync(user, registrationCommand.Password);
-      return user;
+      var userCreateResult=await _userManger.CreateAsync(user, registrationCommand.Password);
+      if(!userCreateResult.Succeeded)
+          return ErrorsMy.General.Failure("UserCreateResult");
+      
+      return user.Id;
     }
 }

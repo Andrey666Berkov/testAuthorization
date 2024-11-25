@@ -1,4 +1,4 @@
-﻿using Infrastructure.Models;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +52,8 @@ public class ApplicationDbContext : IdentityDbContext<User,Role, Guid>
         builder.Entity<IdentityUserLogin<Guid>>().ToTable("user_logins");
         
         builder.Entity<IdentityUserToken<Guid>>().ToTable("user_tokens");
+        
+        
     }
     
     // "Database": "Server=server;Port=port;Database=database;User Id=userid;Password=password;",
